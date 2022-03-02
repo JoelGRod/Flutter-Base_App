@@ -1,0 +1,1 @@
+export 'package:movies_app/shared/models/menu_option.dart';
