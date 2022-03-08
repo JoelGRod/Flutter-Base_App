@@ -7,7 +7,7 @@ class MovieSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 250,
+      height: 260,
       color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,11 +47,25 @@ class _MoviePoster extends StatelessWidget {
     return Container(
       width: 130,
       height: 190,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 10, 
-        vertical: 10
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       color: Colors.indigo,
+      child: Column(
+        children: const [
+          FadeInImage(
+            width: 130,
+            height: 190,
+            fit: BoxFit.cover,
+            placeholder: AssetImage('assets/imgs/no-image.jpg'), 
+            image: NetworkImage('https://via.placeholder.com/300x400')
+          ),
+          Text(
+            'Memento',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
     );
   }
 }
