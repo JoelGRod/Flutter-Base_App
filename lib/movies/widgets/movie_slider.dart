@@ -8,14 +8,12 @@ class MovieSlider extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 260,
-      color: Colors.red,
+      // color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20
-            ),
+            padding: EdgeInsets.only(left: 20, bottom: 10),
             child: Text(
               'Popular', 
               style: TextStyle(
@@ -48,17 +46,28 @@ class _MoviePoster extends StatelessWidget {
       width: 130,
       height: 190,
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      color: Colors.indigo,
+      // color: Colors.indigo,
       child: Column(
-        children: const [
-          FadeInImage(
-            width: 130,
-            height: 190,
-            fit: BoxFit.cover,
-            placeholder: AssetImage('assets/imgs/no-image.jpg'), 
-            image: NetworkImage('https://via.placeholder.com/300x400')
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(
+              context, 
+              'movie_details',
+              arguments: 'movie-instance'
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: const FadeInImage(
+                width: 130,
+                height: 190,
+                fit: BoxFit.cover,
+                placeholder: AssetImage('assets/imgs/no-image.jpg'), 
+                image: AssetImage('assets/imgs/no-image.jpg'),
+                // image: NetworkImage('https://via.placeholder.com/300x400')
+              ),
+            ),
           ),
-          Text(
+          const Text(
             'Memento',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
