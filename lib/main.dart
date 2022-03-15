@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:movies_app/router/app_routes.dart';
 import 'package:movies_app/shared/themes/themes.dart';
-import 'package:movies_app/movies/providers/movies_provider.dart';
+import 'package:movies_app/movies/services/movies_service.dart';
 
 void main() => runApp(const AppState());
 
@@ -16,7 +16,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (BuildContext context) => MoviesProvider(),
+          create: (BuildContext context) => MoviesService(),
           lazy: false,
         )
       ],
