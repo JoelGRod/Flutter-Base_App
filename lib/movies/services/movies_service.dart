@@ -11,6 +11,8 @@ class MoviesService extends ChangeNotifier {
   final String _apiKey = '5c049880e11525b023c95249d3047b17';
   final String _lang = 'es-ES';
 
+  List<Movie> nowPlayingMovies = [];
+
   MoviesService() {
     getNowPlayingMovies();
   }
@@ -27,9 +29,8 @@ class MoviesService extends ChangeNotifier {
     );
 
     final response = await http.get(url);
-
     final MoviesRespModel moviesResponse = MoviesRespModel.fromJson(response.body);
-
-    print(moviesResponse.results[0].title);
+    nowPlayingMovies = moviesResponse.results;
+    notifyListeners();
   }
 }
