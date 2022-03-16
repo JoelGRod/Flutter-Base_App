@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:movies_app/movies/models/models.dart';
-import 'package:movies_app/shared/secrets/secrets.dart' show MoviesSecrets;
+import 'package:movies_app/shared/secrets/secrets.dart';
 
 class MoviesService extends ChangeNotifier {
 

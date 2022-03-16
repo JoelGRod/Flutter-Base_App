@@ -31,6 +31,7 @@ class HomeScreen extends StatelessWidget {
               movies: moviesService.nowPlayingMovies 
             ),
             MovieSlider( 
+              title: "Popular",
               movies: moviesService.popularMovies 
             )
           ],
