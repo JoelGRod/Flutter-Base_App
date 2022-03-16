@@ -15,4 +15,5 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-It's necessary to define the domains secrets (Api keys) at /lib/shared/secrets, an example is provided in that location
+It's necessary to define the domains secrets (Api keys) at /lib/shared/secrets, 
+an example is provided in that location (remove dist word and add your API Key).
