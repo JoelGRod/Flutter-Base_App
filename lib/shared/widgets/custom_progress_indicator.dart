@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
-  const CustomProgressIndicator({Key? key}) : super(key: key);
+  const CustomProgressIndicator({
+    Key? key,
+    required this.containerHeight
+  }) : super(key: key);
+
+  final double containerHeight;
 
   @override
   Widget build(BuildContext context) {
 
-    final Size size = MediaQuery.of(context).size;
-
     return SizedBox(
         width: double.infinity,
-        height: size.height * 0.5,
+        height: containerHeight,
         child: const Center(
           child: CircularProgressIndicator()
         ),

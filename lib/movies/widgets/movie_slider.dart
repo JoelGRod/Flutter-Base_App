@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:movies_app/movies/models/models.dart';
+import 'package:movies_app/shared/widgets/widgets.dart';
 
-import 'package:movies_app/movies/widgets/widgets.dart';
 
 class MovieSlider extends StatelessWidget {
   const MovieSlider({
@@ -15,7 +15,11 @@ class MovieSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    if( movies.isEmpty ) return const CustomProgressIndicator();
+    final Size size = MediaQuery.of(context).size;
+
+    if( movies.isEmpty ) {
+      return CustomProgressIndicator(containerHeight: size.height * 0.3);
+    }
     
     return SizedBox(
       width: double.infinity,

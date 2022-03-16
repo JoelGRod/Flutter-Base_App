@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 import 'package:movies_app/movies/models/models.dart';
-import 'package:movies_app/movies/widgets/widgets.dart';
+import 'package:movies_app/shared/widgets/widgets.dart';
+
 
 class CardSwiper extends StatelessWidget {
   
@@ -19,7 +20,9 @@ class CardSwiper extends StatelessWidget {
 
     final Size size = MediaQuery.of(context).size;
 
-    if( movies.isEmpty ) return const CustomProgressIndicator();
+    if( movies.isEmpty ) {
+      return CustomProgressIndicator(containerHeight: size.height * 0.5);
+    }
 
     return SizedBox(
       width: double.infinity,
