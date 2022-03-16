@@ -12,9 +12,11 @@ class MoviesService extends ChangeNotifier {
   final String _lang = 'es-ES';
 
   List<Movie> nowPlayingMovies = [];
+  List<Movie> popularMovies = [];
 
   MoviesService() {
     getNowPlayingMovies();
+    getPopularMovies();
   }
 
   getNowPlayingMovies() async {
@@ -29,8 +31,27 @@ class MoviesService extends ChangeNotifier {
     );
 
     final response = await http.get(url);
-    final MoviesRespModel moviesResponse = MoviesRespModel.fromJson(response.body);
+    final NowPlayingRespModel moviesResponse = NowPlayingRespModel.fromJson(response.body);
     nowPlayingMovies = moviesResponse.results;
     notifyListeners();
   }
+
+  getPopularMovies() async {
+    Uri url = Uri.https(                                                                                                                                       
+      _baseUrl, 
+      '/3/movie/popular', 
+      {
+        'api_key': _apiKey,
+        'language': _lang,
+        'page': '1',
+      }
+    );
+
+    final response = await http.get(url);
+    final PopularRespModel moviesResponse = PopularRespModel.fromJson(response.body);
+    popularMovies = [ ...popularMovies, ...moviesResponse.results ];
+    notifyListeners();
+  }
+
+
 }

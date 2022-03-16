@@ -1,13 +1,9 @@
-// To parse this JSON data, do
-//
-//     final moviesRespInterface = moviesRespInterfaceFromMap(jsonString);
-
 import 'dart:convert';
 
 import 'package:movies_app/movies/models/models.dart';
 
-class MoviesRespModel {
-    MoviesRespModel({
+class NowPlayingRespModel {
+    NowPlayingRespModel({
         required this.dates,
         required this.page,
         required this.results,
@@ -21,11 +17,11 @@ class MoviesRespModel {
     int totalPages;
     int totalResults;
 
-    factory MoviesRespModel.fromJson(String str) => MoviesRespModel.fromMap(json.decode(str));
+    factory NowPlayingRespModel.fromJson(String str) => NowPlayingRespModel.fromMap(json.decode(str));
 
     // String toJson() => json.encode(toMap());
 
-    factory MoviesRespModel.fromMap(Map<String, dynamic> json) => MoviesRespModel(
+    factory NowPlayingRespModel.fromMap(Map<String, dynamic> json) => NowPlayingRespModel(
         dates: Dates.fromMap(json["dates"]),
         page: json["page"],
         results: List<Movie>.from(json["results"].map((x) => Movie.fromMap(x))),

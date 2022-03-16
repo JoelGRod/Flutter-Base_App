@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 
+import 'package:movies_app/movies/models/models.dart';
+
+import 'package:movies_app/movies/widgets/widgets.dart';
+
 class MovieSlider extends StatelessWidget {
-  const MovieSlider({Key? key}) : super(key: key);
+  const MovieSlider({
+    Key? key,
+    required this.movies
+  }) : super(key: key);
+
+  final List<Movie> movies;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+
+    if( movies.isEmpty ) return const CustomProgressIndicator();
+    
+    return SizedBox(
       width: double.infinity,
       height: 260,
       // color: Colors.red,
@@ -24,21 +36,27 @@ class MovieSlider extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 20,
+              itemCount: movies.length,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int idx) => const _MoviePoster()
+              itemBuilder: (BuildContext context, int idx) {
+                final Movie movie = movies[idx];
+                return _MoviePoster(movie: movie);
+              }
             ),
           )
-
         ],
-
       ),
     );
   }
 }
 
 class _MoviePoster extends StatelessWidget {
-  const _MoviePoster({Key? key}) : super(key: key);
+  const _MoviePoster({
+    Key? key,
+    required this.movie
+  }) : super(key: key);
+
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +75,17 @@ class _MoviePoster extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const FadeInImage(
+              child: FadeInImage(
                 width: 130,
                 height: 190,
                 fit: BoxFit.cover,
-                placeholder: AssetImage('assets/imgs/no-image.jpg'), 
-                image: AssetImage('assets/imgs/no-image.jpg'),
-                // image: NetworkImage('https://via.placeholder.com/300x400')
+                placeholder: const AssetImage('assets/imgs/no-image.jpg'), 
+                image: NetworkImage(movie.fullPosterUrl),
               ),
             ),
           ),
-          const Text(
-            'Memento',
+          Text(
+            movie.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

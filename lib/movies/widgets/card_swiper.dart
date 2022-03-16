@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:movies_app/movies/models/models.dart';
-
 import 'package:card_swiper/card_swiper.dart';
+
+import 'package:movies_app/movies/models/models.dart';
+import 'package:movies_app/movies/widgets/widgets.dart';
 
 class CardSwiper extends StatelessWidget {
   
@@ -18,17 +19,9 @@ class CardSwiper extends StatelessWidget {
 
     final Size size = MediaQuery.of(context).size;
 
-    if( movies.length == 0 ) {
-      return Container(
-        width: double.infinity,
-        height: size.height * 0.5,
-        child: const Center(
-          child: CircularProgressIndicator()
-        ),
-      );
-    }
+    if( movies.isEmpty ) return const CustomProgressIndicator();
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: size.height * 0.5,
       // color: Colors.red,
@@ -61,3 +54,5 @@ class CardSwiper extends StatelessWidget {
     );
   }
 }
+
+
