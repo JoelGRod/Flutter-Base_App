@@ -8,6 +8,7 @@ import 'package:movies_app/shared/secrets/secrets.dart';
 class MoviesService extends ChangeNotifier {
   List<Movie> nowPlayingMovies = [];
   List<Movie> popularMovies = [];
+  Map<int, List<Cast>> moviesCast = {};
   int _popularPage = 0;
 
   MoviesService() {
@@ -42,4 +43,16 @@ class MoviesService extends ChangeNotifier {
     popularMovies = [...popularMovies, ...moviesResponse.results];
     notifyListeners();
   }
+
+  Future<List<Cast>> getMovieCast(int movieId) async {
+
+    // Check if cast exists
+    if(moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
+
+    final String jsonData = await _getJsonData('/3/movie/$movieId/credits');
+    final CreditsRespModel castResponse = CreditsRespModel.fromJson(jsonData);
+    moviesCast[castResponse.id] = castResponse.cast;
+    return castResponse.cast;
+  }
+
 }

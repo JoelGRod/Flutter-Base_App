@@ -1,26 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:movies_app/shared/widgets/widgets.dart';
+import 'package:movies_app/movies/models/models.dart';
+
+import 'package:movies_app/movies/services/movies_service.dart';
 
 class CastingCards extends StatelessWidget {
-  const CastingCards({Key? key}) : super(key: key);
+
+  final int movieId;
+
+  const CastingCards({
+    Key? key,
+    required this.movieId
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10, bottom: 30),
-      width: double.infinity,
-      height: 180,
-      // color: Colors.green,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int idx) => const _CastCard()
-      ),
+
+    final moviesService = Provider.of<MoviesService>(context, listen: true);
+
+    return FutureBuilder(
+      future: moviesService.getMovieCast(movieId),
+      builder: (BuildContext context, AsyncSnapshot<List<Cast>> snapshot) {
+
+        if(!snapshot.hasData) {
+          return const SizedBox(
+            height: 180,
+            child: CustomProgressIndicator(containerHeight: 180)
+          );
+        }
+
+        final List<Cast> cast = snapshot.data!;
+
+        return Container(
+          margin: const EdgeInsets.only(top: 10, bottom: 30),
+          width: double.infinity,
+          height: 180,
+          // color: Colors.green,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: cast.length,
+            itemBuilder: (BuildContext context, int idx) => _CastCard(castProfile: cast[idx])
+          ),
+        );
+      },
     );
   }
 }
 
 class _CastCard extends StatelessWidget {
-  const _CastCard({Key? key}) : super(key: key);
+  
+  final Cast castProfile;
+  
+  const _CastCard({
+    Key? key,
+    required this.castProfile
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +69,17 @@ class _CastCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: const FadeInImage(
-              placeholder: AssetImage("assets/imgs/no-image.jpg"), 
-              image: AssetImage("assets/imgs/no-image.jpg"),
+            child: FadeInImage(
+              placeholder: const AssetImage("assets/imgs/no-image.jpg"), 
+              image: NetworkImage(castProfile.fullProfilePath),
               width: 110,
               height: 140,
               fit: BoxFit.cover
             ),
           ),
           const SizedBox(height: 5),
-          const Text(
-            "actor.name example example example",
+          Text(
+            castProfile.name,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             textAlign: TextAlign.center,
