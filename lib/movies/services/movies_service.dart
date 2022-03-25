@@ -45,7 +45,6 @@ class MoviesService extends ChangeNotifier {
   }
 
   Future<List<Cast>> getMovieCast(int movieId) async {
-
     // Check if cast exists
     if(moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
 
