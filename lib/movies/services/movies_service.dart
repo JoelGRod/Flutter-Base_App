@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:movies_app/movies/models/models.dart';
+import 'package:movies_app/movies/models/search_movie_resp_model.dart';
 import 'package:movies_app/shared/secrets/secrets.dart';
 
 class MoviesService extends ChangeNotifier {
@@ -16,11 +17,14 @@ class MoviesService extends ChangeNotifier {
     getPopularMovies();
   }
 
-  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
-    Uri url = Uri.https(MoviesSecrets.baseUrl, endpoint, {
+  // Separate this to gral shared/providers
+  Future<String> _getJsonData(String endpoint,
+      [int page = 1, String query = '']) async {
+    final Uri url = Uri.https(MoviesSecrets.baseUrl, endpoint, {
       'api_key': MoviesSecrets.apiKey,
       'language': MoviesSecrets.lang,
       'page': '$page',
+      'query': query
     });
 
     final response = await http.get(url);
@@ -38,7 +42,8 @@ class MoviesService extends ChangeNotifier {
   getPopularMovies() async {
     _popularPage++;
 
-    final String jsonData = await _getJsonData('/3/movie/popular', _popularPage);
+    final String jsonData =
+        await _getJsonData('/3/movie/popular', _popularPage);
     final PopularRespModel moviesResponse = PopularRespModel.fromJson(jsonData);
     popularMovies = [...popularMovies, ...moviesResponse.results];
     notifyListeners();
@@ -46,7 +51,7 @@ class MoviesService extends ChangeNotifier {
 
   Future<List<Cast>> getMovieCast(int movieId) async {
     // Check if cast exists
-    if(moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
+    if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
 
     final String jsonData = await _getJsonData('/3/movie/$movieId/credits');
     final CreditsRespModel castResponse = CreditsRespModel.fromJson(jsonData);
@@ -54,4 +59,10 @@ class MoviesService extends ChangeNotifier {
     return castResponse.cast;
   }
 
+  Future<List<Movie>> searchMovies(String query) async {
+    final String jsonData = await _getJsonData('/3/search/movie');
+    final SearchMovieRespModel searchResponse =
+        SearchMovieRespModel.fromJson(jsonData);
+    return searchResponse.results;
+  }
 }
