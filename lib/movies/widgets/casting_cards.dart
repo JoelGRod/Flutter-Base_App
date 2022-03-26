@@ -18,7 +18,7 @@ class CastingCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final moviesService = Provider.of<MoviesService>(context, listen: true);
+    final moviesService = Provider.of<MoviesService>(context, listen: false);
 
     return FutureBuilder(
       future: moviesService.getMovieCast(movieId),

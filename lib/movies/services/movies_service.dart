@@ -18,13 +18,11 @@ class MoviesService extends ChangeNotifier {
   }
 
   // Separate this to gral shared/providers
-  Future<String> _getJsonData(String endpoint,
-      [int page = 1, String query = '']) async {
+  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
     final Uri url = Uri.https(MoviesSecrets.baseUrl, endpoint, {
       'api_key': MoviesSecrets.apiKey,
       'language': MoviesSecrets.lang,
-      'page': '$page',
-      'query': query
+      'page': '$page'
     });
 
     final response = await http.get(url);
@@ -60,9 +58,15 @@ class MoviesService extends ChangeNotifier {
   }
 
   Future<List<Movie>> searchMovies(String query) async {
-    final String jsonData = await _getJsonData('/3/search/movie');
+    final Uri url = Uri.https(MoviesSecrets.baseUrl, '/3/search/movie', {
+      'api_key': MoviesSecrets.apiKey,
+      'language': MoviesSecrets.lang,
+      'query': query
+    });
+
+    final response = await http.get(url);
     final SearchMovieRespModel searchResponse =
-        SearchMovieRespModel.fromJson(jsonData);
+        SearchMovieRespModel.fromJson(response.body);
     return searchResponse.results;
   }
 }
