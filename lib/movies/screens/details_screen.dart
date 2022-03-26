@@ -90,12 +90,15 @@ class _MoviePosterAndTitle extends StatelessWidget {
       // color: Colors.red,
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: const AssetImage("assets/imgs/no-image.jpg"), 
-              image: NetworkImage(movie.fullPosterUrl),
-              height: (size.width / 2.5),
+          Hero(
+            tag: movie.id,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: const AssetImage("assets/imgs/no-image.jpg"), 
+                image: NetworkImage(movie.fullPosterUrl),
+                height: (size.width / 2.5),
+              ),
             ),
           ),
           const SizedBox(width: 20),
