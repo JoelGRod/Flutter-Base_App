@@ -32,6 +32,8 @@ class Movie {
     bool video;
     double voteAverage;
     int voteCount;
+    // Hero ID
+    String? heroId;
 
     get fullPosterUrl {
       return posterPath != null 

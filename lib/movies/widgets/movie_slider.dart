@@ -82,6 +82,8 @@ class _MoviePoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    movie.heroId = 'slider-${movie.id}';
+
     return Container(
       width: 130,
       height: 175,
@@ -95,14 +97,17 @@ class _MoviePoster extends StatelessWidget {
               'movie_details',
               arguments: movie
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                width: 130,
-                height: 175,
-                fit: BoxFit.cover,
-                placeholder: const AssetImage('assets/imgs/no-image.jpg'),
-                image: NetworkImage(movie.fullPosterUrl),
+            child: Hero(
+              tag: movie.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  width: 130,
+                  height: 175,
+                  fit: BoxFit.cover,
+                  placeholder: const AssetImage('assets/imgs/no-image.jpg'),
+                  image: NetworkImage(movie.fullPosterUrl),
+                ),
               ),
             ),
           ),
