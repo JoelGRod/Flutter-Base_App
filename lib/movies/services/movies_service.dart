@@ -57,6 +57,7 @@ class MoviesService extends ChangeNotifier {
     return castResponse.cast;
   }
 
+  // This must be a Stream
   Future<List<Movie>> searchMovies(String query) async {
     final Uri url = Uri.https(MoviesSecrets.baseUrl, '/3/search/movie', {
       'api_key': MoviesSecrets.apiKey,
