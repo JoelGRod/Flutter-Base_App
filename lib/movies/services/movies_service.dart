@@ -82,16 +82,17 @@ class MoviesService extends ChangeNotifier {
   }
 
   void getSuggestionsByQuery(String query) {
-    debouncer.value = '';
+    debouncer.value = query;
     debouncer.onValue = ( value ) async {
       final results = await searchMovies(value);
       _suggestionsStreamController.add(results);
     };
 
-    final timer = Timer.periodic(const Duration(milliseconds: 300), (timer) { 
-      debouncer.value = query;
-    });
+    // Not necessary
+    // final timer = Timer.periodic(const Duration(milliseconds: 300), (timer) { 
+    //   debouncer.value = query;
+    // });
 
-    Future.delayed(const Duration(milliseconds: 301)).then( (value) => timer.cancel());
+    // Future.delayed(const Duration(milliseconds: 301)).then( (value) => timer.cancel());
   }
 }
