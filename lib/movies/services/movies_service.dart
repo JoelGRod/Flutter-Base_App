@@ -15,10 +15,12 @@ class MoviesService extends ChangeNotifier {
   Map<int, List<Cast>> moviesCast = {};
   int _popularPage = 0;
 
+  /* ------------- Streams ------------- */
   final Debouncer<String> debouncer = Debouncer(duration: const Duration(milliseconds: 500));
   final StreamController<List<Movie>> _suggestionsStreamController = StreamController.broadcast();
   
   Stream<List<Movie>> get suggestionsStream => _suggestionsStreamController.stream;
+  /* ------------- End Streams ------------- */
 
   MoviesService() {
     getNowPlayingMovies();
@@ -82,7 +84,7 @@ class MoviesService extends ChangeNotifier {
   void getSuggestionsByQuery(String query) {
     debouncer.value = '';
     debouncer.onValue = ( value ) async {
-      final results = await searchMovies(query);
+      final results = await searchMovies(value);
       _suggestionsStreamController.add(results);
     };
 
